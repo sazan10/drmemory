@@ -21,7 +21,7 @@ jobs:
     - name: Compile free.c test
       run: |
         # Replace with the actual source code of free.c if not in the repo
-        gcc -o free.exe drmemory/tests/free.c
+        gcc -o tests/free.c
 
     - name: Run Dr. Memory with malloc/free test
       run: |
