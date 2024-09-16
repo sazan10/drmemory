@@ -15,7 +15,6 @@ jobs:
         tar -xvzf DrMemory-Windows-2.6.0.zip
         cd drmemory
         dir
-
         
     - name: Compile free.c test
       run: |
