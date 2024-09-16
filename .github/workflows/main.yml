@@ -1,0 +1,26 @@
+name: Reproduce DrMemory Issue #886
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set Up Dr. Memory
+      run: |
+        ls
+        sudo apt install wget
+        wget -P /tmp/ https://github.com/DynamoRIO/drmemory/releases/download/release_2.6.0/DrMemory-Linux-2.6.0.tar.gz && tar -xzf /tmp/DrMemory-Linux-2.6.0.tar.gz -C /tmp/ && echo "/tmp/DrMemory-Linux-2.6.0/bin" >> $GITHUB_PATH"
+      
+    - name: Compile free.c test
+      run: |
+        # Replace with the actual source code of free.c if not in the repo
+        gcc -o free.exe free.c
+
+    - name: Run Dr. Memory with malloc/free test
+      run: |
+        .\DrMemory-Windows-2.4.0-1\bin\drmemory.exe -pause_at_error -light -dr_ops "-msgbox_mask 0x1" -- .\free.exe
