@@ -18,10 +18,10 @@ jobs:
     - name: Compile free.c test
       run: |
         # Replace with the actual source code of free.c if not in the repo
-        gcc -o free.exe tests/free.c
+        gcc -o free.exe tests\free.c
 
     - name: Run Dr. Memory with malloc/free test
       run: |
         for ($i = 1; $i -le 10; $i++) {
-          ./DrMemory-Windows-2.6.0/bin64/drmemory.exe -light -dr_ops "-msgbox_mask 0x1" -- ./free.exe
+          .\DrMemory-Windows-2.6.0\bin64\drmemory.exe -light -dr_ops "-msgbox_mask 0x1" -- .\free.exe
         }
