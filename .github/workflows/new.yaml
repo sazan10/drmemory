@@ -81,7 +81,7 @@ jobs:
         echo "=========[Dr. Memory service finished]========="
         gcc tests/free.c
         ls -l 
-        # drmemory -- ./a.out
+        drmemory -pause_at_error -light -dr_ops "-msgbox_mask 0x1" -- ./a.out
     - name: Upload Dr. Memory reports
       uses: actions/upload-artifact@v4
       with:
