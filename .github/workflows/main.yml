@@ -22,6 +22,6 @@ jobs:
 
     - name: Run Dr. Memory with malloc/free test
       run: |
-        for /L %i in (1,1,10) do (
+        for i in {1..10}; do
           .\DrMemory-Windows-2.6.0\bin\drmemory.exe -light -dr_ops "-msgbox_mask 0x1" -- .\free.exe
-        )
+        done
