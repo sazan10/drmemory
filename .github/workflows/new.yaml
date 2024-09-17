@@ -33,7 +33,7 @@ jobs:
       run: | 
         sudo apt-get update
         sudo apt-get install -y libunwind8
-        wget -P /tmp/ https://github.com/DynamoRIO/drmemory/releases/download/release_2.6.0/DrMemory-Linux-2.6.0.tar.gz && tar -xzf /tmp/DrMemory-Linux-2.6.0.tar.gz -C /tmp/ && echo "/tmp/DrMemory-Linux-2.6.0/bin64" >> $GITHUB_PATH
+        wget -P /tmp/ https://github.com/DynamoRIO/drmemory/releases/download/release_2.6.0/DrMemory-Linux-2.6.0.tar.gz && tar -xzf /tmp/DrMemory-Linux-2.6.0.tar.gz -C /tmp/
 
            
     - name: Disable Address Space Randomization
@@ -47,43 +47,7 @@ jobs:
     - name: Run Dr. Memory
       run: |
         #!/bin/bash
-        mkdir -p drmem_logs
         set +e 
-        echo "=========[Dr Memory Service Started!]========="
-        ls -l
-        DIRECTORY=.
-        is_executable() {
-          local file="$1"
-          if file "$file" | grep -q 'ELF 64-bit'; then
-            return 0
-          else
-            return 1
-          fi
-        }
-        run_with_drmemory() {
-          local executable="$1"
-          local log_dir="./logs"
-          timeout 30s drmemory -logdir "./drmem_logs" -- "$executable"
-          local exit_status=$?
-        }
-        # for((i=0;i<100;i++)); do 
-        #   echo ====== $i ====== 
-        #   drmemory -- ./a.out; done
-        find "$DIRECTORY" -type f -executable | while read -r file; do
-          if is_executable "$file"; then
-            echo "executing $file"
-            run_with_drmemory "$file"
-            echo ""
-            echo ""
-            echo ""
-          fi
-        done
-        echo "=========[Dr. Memory service finished]========="
         gcc tests/free.c
         ls -l 
         /tmp/DrMemory-Linux-2.6.0/bin64/drmemory -pause_at_error -light -dr_ops "-msgbox_mask 0x1" -- ./a.out
-    - name: Upload Dr. Memory reports
-      uses: actions/upload-artifact@v4
-      with:
-        name: drmemory-report-${{ github.event.repository.name }}-on-${{ matrix.os }}-from_branch_${{ github.ref_name }}
-        path: './drmem_logs/*'
