@@ -50,4 +50,6 @@ jobs:
         set +e 
         gcc tests/free.c
         ls -l 
-        /tmp/DrMemory-Linux-2.6.0/bin64/drmemory -pause_at_error -light -dr_ops "-msgbox_mask 0x1" -- ./a.out
+        for((i=0;i<100;i++)); do 
+          /tmp/DrMemory-Linux-2.6.0/bin64/drmemory -pause_at_error -light -dr_ops "-msgbox_mask 0x1" -- ./a.out
+        done
