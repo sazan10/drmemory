@@ -19,6 +19,13 @@ jobs:
       run: |
         # Replace with the actual source code of free.c if not in the repo
         gcc -o free.exe tests\free.c
+    - name: Disable Address Space Randomization
+      if: runner.os == 'Linux'
+      run: sudo sysctl -w kernel.randomize_va_space=0
+      
+    - name: Disable swapping 
+      if: runner.os == 'Linux' 
+      run: sudo swapoff -a
 
     - name: Run Dr. Memory with malloc/free test
       run: |
