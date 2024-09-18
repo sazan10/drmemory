@@ -47,7 +47,7 @@ jobs:
     - name: Run Dr. Memory
       run: |
         #!/bin/bash
-        set +e 
+        # set +e 
         gcc tests/free.c
         ls -l 
         for((i=0;i<100;i++)); do 
